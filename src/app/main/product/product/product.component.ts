@@ -3,6 +3,8 @@ import { FileUpload } from 'primeng/fileupload';
 import { FormBuilder, Validators} from '@angular/forms';
 import { BaseComponent } from '../../../lib/base-component';
 import 'rxjs/add/operator/takeUntil';
+
+
 declare var $: any;
 @Component({
   selector: 'app-product',
@@ -10,6 +12,8 @@ declare var $: any;
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent extends BaseComponent implements OnInit {
+  menus:any;
+  menus1:any;
   public products: any;
   public product: any;
   public totalRecords:any;
@@ -31,6 +35,14 @@ export class ProductComponent extends BaseComponent implements OnInit {
     this.formsearch = this.fb.group({
       'product_name': [''],
       'product_price': [''],
+    });
+
+
+    this._api.get('/api/category/get-category').takeUntil(this.unsubscribe).subscribe(res => {
+      this.menus = res;
+    });
+    this._api.get('/api/brand/get-brand').takeUntil(this.unsubscribe).subscribe(res => {
+      this.menus1 = res;
     });
 
    this.search();
@@ -162,13 +174,13 @@ export class ProductComponent extends BaseComponent implements OnInit {
         this.product = res;
 
           this.formdata = this.fb.group({
-            'product_name': ['',Validators.required],
-      'product_content': ['',Validators.required],
-      'product_status': ['',Validators.required],
-      'category_id': ['',Validators.required],
-      'brand_id': ['', Validators.required],
-      'product_price': ['', Validators.required],
-      'product_desc': ['', Validators.required],
+            'product_name': [this.product.product_name,Validators.required],
+            'product_content': [this.product.product_content,Validators.required],
+            'product_status': [this.product.product_status,Validators.required],
+            'category_id': [this.product.category_id,Validators.required],
+            'brand_id': [this.product.brand_id,Validators.required],
+            'product_price': [this.product.product_price, Validators.required],
+            'product_desc': [this.product.product_desc, Validators.required],
           }, {
 
           });

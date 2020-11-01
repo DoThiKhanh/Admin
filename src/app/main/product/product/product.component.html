@@ -46,9 +46,9 @@
           <th style="width: 70px; text-align: center;">STT</th>
           <th style="width: 15%; text-align: left;">Tên sản phẩm</th>
           <th style="width: 15%; text-align: left;">Hình ảnh</th>
-          <th style="width: 15%; text-align: left;">content</th>
-          <th style="width: 100px; text-align: left;">status</th>
-          <th style="width: 130px; text-align: left;">price</th>
+          <th style="width: 15%; text-align: left;">Content</th>
+          <th style="width: 100px; text-align: left;">Status</th>
+          <th style="width: 130px; text-align: left;">Price</th>
           <th style="width: 130px; text-align: left;">Mô tả</th>
           <th style="width: 120px; text-align: left;">Tác vụ</th>
         </tr>
@@ -58,10 +58,22 @@
           <td style="width: 100px; text-align: center;">{{ i + 1 }}</td>
           <td>{{ item.product_name }}</td>
           <td><img style="width:70px;" src="./assets/product/{{item.product_image}}"/></td>
-          <td>{{ item.product_content }}</td>
+          <td style="display: -webkit-box;
+          line-height: 30px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;"
+ innerHtml="{{ item.product_content }}" ></td>
           <td>{{ item.product_status }}</td>
           <td>{{ item.product_price }}</td>
-          <td>{{ item.product_desc }}</td>
+          <td style="display: -webkit-box;
+          line-height: 30px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;"
+ innerHtml="{{ item.product_desc }}"></td>
           <td class="action-col" >
             <div class="btn-group">
               <button title="" class="btn btn-xs btn-white btn-default"  (click)="openUpdateModal(item)">
@@ -105,7 +117,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right">Danh mục(<span style="color: red;">*</span>)</label>
               <div class="col-sm-5">
-                <input type="text" formControlName="category_id" placeholder="Danh mục" />
+                <select style="width: 100%;" *ngFor="let mn of menus" class="custom-select" formControlName="category_id" placeholder="Danh mục">
+                  <option *ngFor="let m of mn.children" value="{{m.category_id}}">{{m.category_name}}</option>
+                </select>
                 <div *ngIf="submitted && f.category_id.errors" class="invalid-feedback">
                   <div *ngIf="f.category_id.errors.required">Danh mục là bắt buộc</div>
               </div>
@@ -115,7 +129,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right">Thương hiệu(<span style="color: red;">*</span>)</label>
               <div class="col-sm-5">
-                <input type="text" formControlName="brand_id" placeholder="Danh mục" />
+                <select style="width: 100%;" *ngFor="let mn of menus1" class="custom-select" formControlName="brand_id" placeholder="Danh mục">
+                  <option *ngFor="let m of mn.children" value="{{m.brand_id}}">{{m.brand_name}}</option>
+                </select>
                 <div *ngIf="submitted && f.brand_id.errors" class="invalid-feedback">
                   <div *ngIf="f.brand_id.errors.required">Danh mục là bắt buộc</div>
               </div>
@@ -126,14 +142,14 @@
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Mô tả</label>
               <div class="col-sm-10">
-                <input type="text" formControlName="product_desc" placeholder="Mô tả" />
+                <p-editor formControlName="product_desc" [style]="{'height':'320px'}"></p-editor>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label no-padding-right"> Nội dung</label>
               <div class="col-sm-10">
-                <input type="text" formControlName="product_content" placeholder="Nội dung" />
+                <p-editor formControlName="product_content" [style]="{'height':'320px'}"></p-editor>
               </div>
             </div>
 
@@ -183,3 +199,5 @@
       </div>
     </div>
   </div>
+
+

@@ -5,14 +5,15 @@ import { OrderComponent } from './order/order.component';
 import { ProductComponent } from './product/product.component';
 import { TypeComponent } from './type/type.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import {EditorModule} from 'primeng/editor';
 @NgModule({
-  declarations: [ 
+  declarations: [
     OrderComponent,ProductComponent,TypeComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    EditorModule,
     RouterModule.forChild([
       {
         path: 'order',
@@ -26,7 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
         path: 'type',
         component: TypeComponent,
       },
-  ]),  
+  ]),
   ]
 })
 export class ProductModule { }
